@@ -48,9 +48,9 @@ def bleeping():
                         "avatar_url": "https://w7.pngwing.com/pngs/507/494/png-transparent-adwcleaner-potentially-unwanted-program-adware-browser-hijacking-computer-software-computer-computer-logo-computer-program-thumbnail.png",
                         "attachments": []
                        }
-                response_code=requests.post(webhook_url,json=news).response_code()
+                response_code=requests.post(webhook_url,json=news)
 
-                print("bleeping_feed sent:"+str(response_code))
+                print("bleeping_feed sent:"+str(response_code.status_code))
 
             bleeping_feed = latest_feed_entry
             time.sleep(interval)
@@ -75,9 +75,9 @@ def thehackernews():
                     "avatar_url": "https://thehackernews.com/new-images/img/b/R29vZ2xl/AVvXsEjucioIaLjDLMVbAzsIDpaYM754ZmWwLu6oPFfZ95bcJQK9paBjdrkpQnnjTExUWJbExlV10x25riYersOaWF_TFGCFvlw52qXMvrNMGacAb6nkP1RBTMGL1yWdvoajXbj5qf4U9O_sH6tH-BxNpOveZnxMT6bVDX57FaKB1jFlbPExVQgmA4HKKuROJA/s1700/THN.jpg",
                     "attachments": []
                     }
-                response_code=requests.post(webhook_url,json=news).response_code()
+                response_code=requests.post(webhook_url,json=news)
 
-                print("TheHackersNews sent:"+str(response_code))
+                print("TheHackersNews sent:"+str(response_code.stat))
                 thehackernews_feed = latest_feed
             time.sleep(interval)
     except Exception as e:
@@ -99,9 +99,9 @@ def nakedsecurity():
                     "avatar_url": "https://media.licdn.com/dms/image/C4D0BAQG7JPzNAuTXEA/company-logo_200_200/0/1579611356895?e=2147483647&v=beta&t=f8GxbDi1dQIjgSAx_QverApaq8lPIEM8IzZAjCOCXl8",
                     "attachments": []
                     }
-                response_code=requests.post(webhook_url,json=news).response_code()
+                response_code=requests.post(webhook_url,json=news)
 
-                print("nakedsecurity sent:"+str(response_code))
+                print("nakedsecurity sent:"+str(response_code.status_code))
 
             nakedsec_feed = latest_feed
             time.sleep(interval)
@@ -125,9 +125,9 @@ def packetstorm():
                     "avatar_url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Hero_Alom.png",
                     "attachments": []
                 }
-                response_code=requests.post(webhook_url,json=news).response_code()
+                response_code=requests.post(webhook_url,json=news)
 
-                print("packetstormsecurity sent:"+str(response_code))
+                print("packetstormsecurity sent:"+str(response_code.status_code))
 
                 packetstorm_feed = latest_news_feed
             time.sleep(interval)
@@ -150,9 +150,9 @@ def hackaday():
                         "avatar_url": "https://hackaday.com/wp-content/uploads/2013/02/had_green_glow.png",
                         "attachments": []
                         }
-                response_code=requests.post(webhook_url,json=news).response_code()
+                response_code=requests.post(webhook_url,json=news)
 
-                print("Hackaday sent:"+str(response_code))
+                print("Hackaday sent:"+str(response_code.status_code))
 
                 hackaday_feed = hackaday_latest_feed
             time.sleep(interval)
