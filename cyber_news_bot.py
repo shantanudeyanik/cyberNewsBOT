@@ -12,11 +12,11 @@ nakedsec_url     = "https://nakedsecurity.sophos.com/feed/"
 hackaday_url     = "https://hackaday.com/blog/feed/"
 
 try:
-    bleeping_feed = feedparser.parse(bleeping_url).entries[0]
+    bleeping_feed       = feedparser.parse(bleeping_url).entries[0]
     thehackernews_feed  = feedparser.parse(theHNews_url).entries[0]
     nakedsec_feed       = feedparser.parse(nakedsec_url).entries[0]
     packetstorm_feed    = feedparser.parse(packetstorm_url).entries[0]
-    hackaday_feed = feedparser.parse(hackaday_url).entries[0]
+    hackaday_feed       = feedparser.parse(hackaday_url).entries[0]
 
 except IndexError:
     bleeping_feed       = {}
@@ -48,7 +48,7 @@ def bleeping():
                         "avatar_url": "https://w7.pngwing.com/pngs/507/494/png-transparent-adwcleaner-potentially-unwanted-program-adware-browser-hijacking-computer-software-computer-computer-logo-computer-program-thumbnail.png",
                         "attachments": []
                        }
-                response_code=requests.post(webhook_url,json=news)
+                response_code= requests.post(webhook_url,json=news)
 
                 print("bleeping_feed sent:"+str(response_code.status_code))
 
@@ -77,7 +77,7 @@ def thehackernews():
                     }
                 response_code=requests.post(webhook_url,json=news)
 
-                print("TheHackersNews sent:"+str(response_code.stat))
+                print("TheHackersNews sent:"+str(response_code.status_code))
                 thehackernews_feed = latest_feed
             time.sleep(interval)
     except Exception as e:
