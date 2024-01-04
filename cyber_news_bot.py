@@ -3,12 +3,13 @@
 import feedparser
 import requests
 import time
+import os
 
-bleeping_url = "https://www.bleepingcomputer.com/feed/"
-packetstorm_url  = 'https://rss.packetstormsecurity.com/'
-theHNews_url = "https://feeds.feedburner.com/TheHackersNews"
-nakedsec_url = "https://nakedsecurity.sophos.com/feed/"
-hackaday_url = "https://hackaday.com/blog/feed/"
+bleeping_url     = "https://www.bleepingcomputer.com/feed/"
+packetstorm_url  = "https://rss.packetstormsecurity.com/"
+theHNews_url     = "https://feeds.feedburner.com/TheHackersNews"
+nakedsec_url     = "https://nakedsecurity.sophos.com/feed/"
+hackaday_url     = "https://hackaday.com/blog/feed/"
 
 try:
     bleeping_feed = feedparser.parse(bleeping_url).entries[0]
@@ -18,11 +19,15 @@ try:
     hackaday_feed = feedparser.parse(hackaday_url).entries[0]
 
 except IndexError:
-    bleeping_feed = {}
+    bleeping_feed       = {}
     thehackernews_feed  = {}
-    nakedsec_feed    = {}
-    packetstorm_feed = {}
-    hackaday_feed = {}
+    nakedsec_feed       = {}
+    packetstorm_feed    = {}
+    hackaday_feed       = {}
+
+except Exception as e:
+    print(e)
+
 
 def bleeping():
     global bleeping_feed
@@ -43,11 +48,15 @@ def bleeping():
                         "avatar_url": "https://w7.pngwing.com/pngs/507/494/png-transparent-adwcleaner-potentially-unwanted-program-adware-browser-hijacking-computer-software-computer-computer-logo-computer-program-thumbnail.png",
                         "attachments": []
                        }
-                requests.post(webhook_url,json=news)
+                response_code=requests.post(webhook_url,json=news).response_code()
+
+                print("bleeping_feed sent:"+str(response_code))
+
             bleeping_feed = latest_feed_entry
             time.sleep(interval)
-    except IndexError:
-        pass
+    except Exception as e:
+        print("Bleeping news: "+str(e))
+
 
 def thehackernews():
     global thehackernews_feed
@@ -66,11 +75,13 @@ def thehackernews():
                     "avatar_url": "https://thehackernews.com/new-images/img/b/R29vZ2xl/AVvXsEjucioIaLjDLMVbAzsIDpaYM754ZmWwLu6oPFfZ95bcJQK9paBjdrkpQnnjTExUWJbExlV10x25riYersOaWF_TFGCFvlw52qXMvrNMGacAb6nkP1RBTMGL1yWdvoajXbj5qf4U9O_sH6tH-BxNpOveZnxMT6bVDX57FaKB1jFlbPExVQgmA4HKKuROJA/s1700/THN.jpg",
                     "attachments": []
                     }
-                requests.post(webhook_url,json=news)
+                response_code=requests.post(webhook_url,json=news).response_code()
+
+                print("TheHackersNews sent:"+str(response_code))
                 thehackernews_feed = latest_feed
             time.sleep(interval)
-    except IndexError:
-        pass
+    except Exception as e:
+        print("The Hacker News: "+str(e))
 
 def nakedsecurity():
     global nakedsec_feed
@@ -88,11 +99,14 @@ def nakedsecurity():
                     "avatar_url": "https://media.licdn.com/dms/image/C4D0BAQG7JPzNAuTXEA/company-logo_200_200/0/1579611356895?e=2147483647&v=beta&t=f8GxbDi1dQIjgSAx_QverApaq8lPIEM8IzZAjCOCXl8",
                     "attachments": []
                     }
-                requests.post(webhook_url,json=news)
+                response_code=requests.post(webhook_url,json=news).response_code()
+
+                print("nakedsecurity sent:"+str(response_code))
+
             nakedsec_feed = latest_feed
             time.sleep(interval)
-    except IndexError:
-        pass
+    except Exception as e:
+        print("Naked Security: "+str(e))
 
 def packetstorm():
     global packetstorm_feed
@@ -111,11 +125,14 @@ def packetstorm():
                     "avatar_url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Hero_Alom.png",
                     "attachments": []
                 }
-                requests.post(webhook_url,json=news)
+                response_code=requests.post(webhook_url,json=news).response_code()
+
+                print("packetstormsecurity sent:"+str(response_code))
+
                 packetstorm_feed = latest_news_feed
             time.sleep(interval)
-    except IndexError:
-        pass
+    except Exception as e:
+        print("Packer packetstorm: "+str(e))
 
 def hackaday():
     global hackaday_feed
@@ -133,19 +150,22 @@ def hackaday():
                         "avatar_url": "https://hackaday.com/wp-content/uploads/2013/02/had_green_glow.png",
                         "attachments": []
                         }
-                requests.post(webhook_url, json=news)
+                response_code=requests.post(webhook_url,json=news).response_code()
+
+                print("Hackaday sent:"+str(response_code))
+
                 hackaday_feed = hackaday_latest_feed
             time.sleep(interval)
 
-    except IndexError:
-        pass
+    except Exception as e:
+        print("Hackaday: "+str(e))
 
-webhook_url = "https://discordapp.com/api/webhooks/1072062492731260968/nOIZYgVMTMbShuwwV9IukiQlelCLaxMkSMA4CxBwkX_Ywve3AMWa6J9fTOB29RnTB9FC"
-interval = 12
+webhook_url = os.getenv('WEBHOOK_URL','')
+interval = int(os.getenv('INTERVAL','5'))
 
 while True:
     bleeping()
     thehackernews()
-    nakedsecurity()
+#    nakedsecurity()
     packetstorm()
     hackaday()
